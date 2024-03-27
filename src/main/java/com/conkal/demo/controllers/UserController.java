@@ -20,15 +20,18 @@ public class UserController {
     }
 
     @PostMapping("/users")
-    public @ResponseBody String store(@Valid  @RequestBody StoreUserRequest request,BindingResult result) {
-        if (result.hasErrors()) {
-            return "Error";
-        }
+    public @ResponseBody String store(@RequestParam String firstName,
+                                      @RequestParam String lastName,
+                                      @RequestParam String email,
+                                      @RequestParam String phone) {
+
+
+
         User user = new User();
-        user.setFirstName(request.getFirstName());
-        user.setLastName(request.getLastName());
-        user.setEmail(request.getEmail());
-        user.setPhone(request.getPhone());
+        user.setFirstName(firstName);
+        user.setLastName(lastName);
+        user.setEmail(email);
+        user.setPhone(phone);
         userRepository.save(user);
         return "Saved";
     }
