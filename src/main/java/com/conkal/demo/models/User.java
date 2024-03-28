@@ -6,9 +6,9 @@ import jakarta.persistence.*;
 @Table(name = "users")
 public class User {
     @Id
+    // auto increment
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
-
 
     @Column(name = "first_name")
     private String firstName;
@@ -19,6 +19,8 @@ public class User {
     private String email;
 
     private String phone;
+
+    private String username;
 
     public Integer getId() {
         return id;
@@ -58,5 +60,13 @@ public class User {
 
     public void setFirstName(String firstName) {
         this.firstName = firstName;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 }
