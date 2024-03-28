@@ -20,8 +20,10 @@ public class UserController {
     @Autowired
     private UserRepository userRepository;
     @GetMapping("/users")
-    public @ResponseBody Iterable<User> index() {
-        // This returns a JSON or XML with the users
+    public @ResponseBody Iterable<User> index(@RequestParam(required = false) String search) {
+        if (search != null) {
+            return userRepository.searchUsers(search);
+        }
         return userRepository.findAll();
     }
 
