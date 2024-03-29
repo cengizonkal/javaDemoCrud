@@ -43,6 +43,29 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).body(user);
     }
 
+    @DeleteMapping("/users/{id}")
+    public @ResponseBody ResponseEntity<?> destroy(@PathVariable Integer id) {
+        userRepository.deleteById(id);
+        return ResponseEntity.status(HttpStatus.OK).body("User deleted successfully");
+    }
+
+    @PatchMapping("/users/{id}")
+    public @ResponseBody ResponseEntity<?> update(@PathVariable Integer id, @Valid StoreUserRequest request, BindingResult result) {
+        if (result.hasErrors()) {
+            return ResponseEntity.unprocessableEntity().body(validationErrors(result));
+        }
+        User user = userRepository.findById(id).orElse(null);
+        if (user == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+        }
+        user.setFirstName(request.getFirstName());
+        user.setLastName(request.getLastName());
+        user.setEmail(request.getEmail());
+        user.setPhone(request.getPhone());
+        userRepository.save(user);
+        return ResponseEntity.status(HttpStatus.OK).body(user);
+    }
+
     private Map<String, String> validationErrors(BindingResult result) {
         Map<String, String> errors = new HashMap<>();
         result.getAllErrors().forEach((error) -> {
