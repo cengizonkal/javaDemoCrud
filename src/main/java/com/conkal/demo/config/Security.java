@@ -20,8 +20,8 @@ public class Security {
   @Bean
   UserDetailsService userDetailsService() {
     UserDetails user1 = User
-        .withUsername("admin")
-        .password("admin")
+        .withUsername("admin") //hardcoded user
+        .password("admin") //hardcoded password
         .roles("ADMIN")
         .passwordEncoder(passwordEncoder()::encode)
         .build();
