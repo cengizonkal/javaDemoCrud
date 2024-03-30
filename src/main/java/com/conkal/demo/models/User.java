@@ -2,12 +2,14 @@ package com.conkal.demo.models;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity // This tells Hibernate to make a table out of this class
 @Table(name = "users")
 public class User {
     @Id
     // auto increment
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(name = "first_name")
@@ -21,6 +23,9 @@ public class User {
     private String phone;
 
     private String username;
+
+    @OneToMany(mappedBy = "user")
+    private List<AccessToken> accessTokens;
 
     public Integer getId() {
         return id;
