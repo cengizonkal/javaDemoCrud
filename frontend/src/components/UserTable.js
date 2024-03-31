@@ -26,7 +26,8 @@ const UserList = () => {
                 <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Name</th>
+                    <th>First Name</th>
+                    <th>Last name</th>
                     <th>Email</th>
                 </tr>
                 </thead>
@@ -34,7 +35,8 @@ const UserList = () => {
                 {users.map(user => (
                     <tr key={user.id}>
                         <td>{user.id}</td>
-                        <td>{user.name}</td>
+                        <td>{user.firstName}</td>
+                        <td>{user.lastName}</td>
                         <td>{user.email}</td>
                     </tr>
                 ))}
