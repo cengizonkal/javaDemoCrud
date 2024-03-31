@@ -1,5 +1,7 @@
 package com.conkal.demo.config;
 
+import com.conkal.demo.repositories.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
@@ -20,12 +22,13 @@ public class Security {
 
 
 
+  @Autowired
+  private UserRepository userRepository;
+
   @Bean
   UserDetailsService userDetailsService() {
 
     //get the user from the database
-
-
 
     UserDetails user1 = User
         .withUsername("admin") //hardcoded user
