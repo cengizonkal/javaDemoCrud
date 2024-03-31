@@ -6,22 +6,33 @@ const UserList = () => {
     const password = 'admin';
 
     useEffect(() => {
-        const requestOptions = {
-            mode: 'cors',
-            headers: new Headers({
-                'Authorization': 'Basic ' + btoa(username + ":" + password),
-            }),
-        };
+       const fetchUsers = async() => {
+           const requestOptions = {
+               mode: 'cors',
+               headers: new Headers({
+                   'Authorization': 'Basic ' + btoa(username + ":" + password),
+               }),
+               method: 'GET',
+           };
+           const search = document.getElementById('search').value;
 
-        fetch('http://localhost:8080/users', requestOptions)
-            .then(response => response.json())
-            .then(data => setUsers(data))
-            .catch(error => console.error('Error fetching users:', error));
+           fetch('http://localhost:8080/users?search='+search, requestOptions)
+
+               .then(response => response.json())
+               .then(data => setUsers(data))
+               .catch(error => console.error('Error fetching users:', error));
+       }
+        fetchUsers();
+       //on search
+        document.getElementById('search').addEventListener('input',fetchUsers);
+
     }, []);
 
     return (
         <div>
             <h2>User List</h2>
+            <input type="text" placeholder="Search..." id="search"/>
+
             <table>
                 <thead>
                 <tr>
