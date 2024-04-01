@@ -1,33 +1,9 @@
 import React, { useState, useEffect } from 'react';
 
-const UserList = () => {
-    const [users, setUsers] = useState([]);
-    const username = 'admin';
-    const password = 'admin';
-
-    useEffect(() => {
-       const fetchUsers = async() => {
-           const requestOptions = {
-               mode: 'cors',
-               headers: new Headers({
-                   'Authorization': 'Basic ' + btoa(username + ":" + password),
-               }),
-               method: 'GET',
-           };
-           const search = document.getElementById('search').value;
-
-           fetch('http://localhost:8080/users?search='+search, requestOptions)
-
-               .then(response => response.json())
-               .then(data => setUsers(data))
-               .catch(error => console.error('Error fetching users:', error));
-       }
-        fetchUsers();
-       //on search
-        document.getElementById('search').addEventListener('input',fetchUsers);
-
-    }, []);
-
+const UserList = ({ users,onSelect }) => {
+    const handleUserSelect = (user) => {
+        onSelect(user);
+    };
     return (
         <div>
             <h2>User List</h2>
@@ -49,6 +25,7 @@ const UserList = () => {
                         <td>{user.firstName}</td>
                         <td>{user.lastName}</td>
                         <td>{user.email}</td>
+                        <td><button onClick={() => handleUserSelect(user)} >Edit</button></td>
                     </tr>
                 ))}
                 </tbody>

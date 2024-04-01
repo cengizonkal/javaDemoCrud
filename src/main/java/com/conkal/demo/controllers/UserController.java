@@ -49,7 +49,7 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body("User deleted successfully");
     }
 
-    @PatchMapping("/users/{id}")
+    @PostMapping("/users/{id}")
     public @ResponseBody ResponseEntity<?> update(@PathVariable Integer id, @Valid StoreUserRequest request, BindingResult result) {
         if (result.hasErrors()) {
             return ResponseEntity.unprocessableEntity().body(validationErrors(result));
