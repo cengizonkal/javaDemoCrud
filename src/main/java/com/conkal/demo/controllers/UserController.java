@@ -2,6 +2,7 @@ package com.conkal.demo.controllers;
 import com.conkal.demo.models.User;
 import com.conkal.demo.repositories.UserRepository;
 import com.conkal.demo.requests.StoreUserRequest;
+import com.conkal.demo.services.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,9 +19,11 @@ import java.util.Map;
 public class UserController {
 
     private final UserRepository userRepository;
+    private final UserService userService;
 
-    public UserController(UserRepository userRepository) {
+    public UserController(UserRepository userRepository, UserService userService) {
         this.userRepository = userRepository;
+        this.userService = userService;
     }
 
     @GetMapping("/users")
@@ -38,13 +41,8 @@ public class UserController {
             // If there are validation errors, return them
             return ResponseEntity.unprocessableEntity().body(validationErrors(result));
         }
-        User user = new User();
-        user.setFirstName(request.getFirstName());
-        user.setLastName(request.getLastName());
-        user.setEmail(request.getEmail());
-        user.setPhone(request.getPhone());
-        userRepository.save(user);
-        return ResponseEntity.status(HttpStatus.CREATED).body(user);
+        userService.storeUser(request);
+        return ResponseEntity.status(HttpStatus.CREATED).body("User created successfully");
     }
 
     @DeleteMapping("/users/{id}")
@@ -62,11 +60,7 @@ public class UserController {
         if (user == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
         }
-        user.setFirstName(request.getFirstName());
-        user.setLastName(request.getLastName());
-        user.setEmail(request.getEmail());
-        user.setPhone(request.getPhone());
-        userRepository.save(user);
+        userService.updateUser(user, request);
         return ResponseEntity.status(HttpStatus.OK).body(user);
     }
 
