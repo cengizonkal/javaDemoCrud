@@ -17,8 +17,12 @@ import java.util.Map;
 @RestController
 public class UserController {
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
+
+    public UserController(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+
     @GetMapping("/users")
     public @ResponseBody Iterable<User> index(@RequestParam(required = false) String search) {
         if (search != null) {
