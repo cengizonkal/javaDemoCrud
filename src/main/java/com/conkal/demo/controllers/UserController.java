@@ -35,7 +35,7 @@ public class UserController {
     }
 
     @PostMapping("/users")
-    public @ResponseBody ResponseEntity<?> store(@Valid StoreUserRequest request, BindingResult result) {
+    public @ResponseBody ResponseEntity<?> store(@RequestBody @Valid StoreUserRequest request, BindingResult result) {
 
         if (result.hasErrors()) {
             // If there are validation errors, return them
